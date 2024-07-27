@@ -1,0 +1,40 @@
+import requests
+from tkinter import *
+
+url = "https://api.exchangerate-api.com/v4/latest/USD"
+
+result = requests.get(url)
+result = result.json()
+rate = result['rates']['UZS']
+tk = Tk()
+
+label = Label(tk, text=f"Do'lir kursi: {rate}")
+label.pack()
+
+def restart():
+    result = requests.get(url)
+    result = result.json()
+    rate = result['rates']['UZS']
+    label.config(text=f"Do'lir kursi: {rate}")
+
+Button(tk, text="Yangilash", command=restart).pack()
+
+e = Entry(tk)
+e.pack()
+label2 = Label(tk, text="0 $ : 0 so'm")
+label2.pack()
+
+def change():
+    global e
+    a = e.get()
+    label2.config(text=f"{a} $: {int(a)*int(rate)} so'm")
+
+Button(tk, text="O'zgartirish", command=change).pack()
+
+
+
+
+
+
+
+tk.mainloop()
